@@ -29,3 +29,6 @@ CrashReportClient/
 # Operating system files
 .DS_Store
 Thumbs.db
+
+# unlua
+Plugins/UnLua/Source/UnLuaDefaultParamCollectorUbtPlugin/
