@@ -1,0 +1,43 @@
+Language: Cpp
+BasedOnStyle: Google
+
+# C++ standard
+Standard: c++20
+
+# Google 默认是 80；UE 项目里 100 或 120 通常更舒服
+ColumnLimit: 140
+
+# 指针/引用风格：int* Ptr; FString& Name;
+DerivePointerAlignment: false
+PointerAlignment: Left
+ReferenceAlignment: Left
+
+# UE 头文件顺序很重要，尤其是 *.generated.h
+SortIncludes: false
+IncludeBlocks: Preserve
+
+# 左大括号单独一行
+BreakBeforeBraces: Allman
+
+# 短函数/短 if 不压成一行，减少 UE 代码可读性问题
+AllowShortFunctionsOnASingleLine: All
+
+# namespace 缩进
+NamespaceIndentation: All
+
+# 构造函数初始化列表
+ConstructorInitializerIndentWidth: 4
+BreakConstructorInitializers: BeforeComma
+
+# 访问控制符 public/private/protected 缩进
+AccessModifierOffset: -1
+
+# UE 宏参数很多，适当保守
+BinPackArguments: false
+BinPackParameters: false
+
+# lambda / braced list
+Cpp11BracedListStyle: true
+
+# 注释
+ReflowComments: false

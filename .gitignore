@@ -1,0 +1,31 @@
+# Unreal Engine generated files
+Binaries/
+DerivedDataCache/
+Intermediate/
+Saved/
+Build/
+CrashReportClient/
+
+# IDE and editor files
+.vs/
+.idea/
+.vscode/
+*.sln
+*.slnx
+*.suo
+*.user
+*.userosscache
+*.sdf
+*.opensdf
+*.VC.db
+*.VC.opendb
+
+# 不要同步vsconfig,不自己编译引擎的话,同步这个没有必要吧.
+.vsconfig
+
+# Unreal autosave/build artifacts
+*_BuiltData.uasset
+
+# Operating system files
+.DS_Store
+Thumbs.db
