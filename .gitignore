@@ -30,5 +30,5 @@ CrashReportClient/
 .DS_Store
 Thumbs.db
 
-# unlua
-Plugins/UnLua/Source/UnLuaDefaultParamCollectorUbtPlugin/
+# UnLua C# UBT plugin build artifacts
+/Plugins/UnLua/Source/UnLuaDefaultParamCollectorUbtPlugin/obj/
