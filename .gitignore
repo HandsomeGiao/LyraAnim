@@ -32,3 +32,7 @@ Thumbs.db
 
 # UnLua C# UBT plugin build artifacts
 /Plugins/UnLua/Source/UnLuaDefaultParamCollectorUbtPlugin/obj/
+
+# vscode project
+*.code-workspace
+.ignore
