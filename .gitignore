@@ -43,7 +43,7 @@ Thumbs.db
 Plugins/Puerts/Source/CSharpParamDefaultValueMetas/CSharpParamDefaultValueMetas.ubtplugin.csproj.props
 Plugins/Puerts/Source/CSharpParamDefaultValueMetas/obj/
 Content/JavaScript/
-Typing/
+/Typing/
 ts_file_versions_info.json
 node_modules/
 
