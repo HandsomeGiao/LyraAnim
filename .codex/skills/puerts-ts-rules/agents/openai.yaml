@@ -1,0 +1,4 @@
+interface:
+  display_name: "puerts TypeScript 规范"
+  short_description: "当前 UE5 项目的 puerts TS 规范"
+  default_prompt: "使用 $puerts-ts-rules 为当前 UE5 项目编写 puerts TypeScript 代码。"

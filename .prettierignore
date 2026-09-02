@@ -1,0 +1,13 @@
+node_modules
+Binaries
+Intermediate
+Saved
+DerivedDataCache
+.vscode
+Content
+Plugins
+JavaScript
+dist
+coverage
+*.uasset
+*.umap

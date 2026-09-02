@@ -1,0 +1,4 @@
+interface:
+  display_name: "UE5 C++ Rules"
+  short_description: "Project rules for Unreal Engine C++ changes."
+  default_prompt: "Use this skill before implementing or modifying UE5 C++ code in this project."

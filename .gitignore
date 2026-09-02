@@ -36,3 +36,14 @@ Thumbs.db
 # vscode project
 *.code-workspace
 .ignore
+
+# puerts
+/Plugins/Puerts/ThirdParty/v8_9.4.146.24/
+# puerts的临时产物
+Plugins/Puerts/Source/CSharpParamDefaultValueMetas/CSharpParamDefaultValueMetas.ubtplugin.csproj.props
+Plugins/Puerts/Source/CSharpParamDefaultValueMetas/obj/
+Content/JavaScript/
+Typing/
+ts_file_versions_info.json
+node_modules/
+
