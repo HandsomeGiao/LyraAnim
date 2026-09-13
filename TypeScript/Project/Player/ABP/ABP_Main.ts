@@ -12,6 +12,9 @@ class TS_ABP_MainPlaceHold {}
 Object.setPrototypeOf(TS_ABP_MainPlaceHold.prototype, ABP_Main.prototype);
 
 export class TS_ABP_Main extends TS_ABP_MainPlaceHold {
+    declare private LastActorYaw: number;
+    declare private ActorYaw: number;
+
     override BlueprintInitializeAnimation(): void {
         console.log("TS_ABP_MainPlaceHold");
     }
@@ -34,7 +37,7 @@ export class TS_ABP_Main extends TS_ABP_MainPlaceHold {
         return this.VelocityLocomotionAngle < this.ForwardMin ? locomotionDirection.Left : locomotionDirection.Right;
     }
 
-    UpdateCharVars(): void {
+    override BlueprintUpdateAnimation(DeltaTimeX: number): void {
         const playerChar = this.TryGetPawnOwner();
         if (!playerChar) {
             return;
@@ -62,10 +65,15 @@ export class TS_ABP_Main extends TS_ABP_MainPlaceHold {
         const equipType = $ref<UE.Game.Project.Enums.E_PlayerEquipType.E_PlayerEquipType>();
         playerCharInterface.GetEquipType(equipType);
         this.EquipType = $unref(equipType);
-    }
 
-    override BlueprintUpdateAnimation(DeltaTimeX: number): void {
-        this.UpdateCharVars();
+        this.LastActorYaw = this.ActorYaw;
+        this.ActorYaw = playerChar.K2_GetActorRotation().Yaw;
+
+        this.DeltaActorYaw = this.ActorYaw - this.LastActorYaw;
+        this.LeanAngle = UE.KismetMathLibrary.Clamp(this.DeltaActorYaw / (DeltaTimeX == 0 ? 1 : DeltaTimeX) / 5.0, -90, 90);
+        if (this.VelocityLocomotionDir == UE.Game.Project.Enums.E_VelocityLocomotionDirection.E_VelocityLocomotionDirection.Backward) {
+            this.LeanAngle *= -1;
+        }
     }
 }
 
