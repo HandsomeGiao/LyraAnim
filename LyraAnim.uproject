@@ -29,6 +29,14 @@
 		{
 			"Name": "AnimationWarping",
 			"Enabled": true
+		},
+		{
+			"Name": "AnimationLocomotionLibrary",
+			"Enabled": true
+		},
+		{
+			"Name": "AllToolsets",
+			"Enabled": true
 		}
 	]
 }

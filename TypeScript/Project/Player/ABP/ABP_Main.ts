@@ -74,6 +74,10 @@ export class TS_ABP_Main extends TS_ABP_MainPlaceHold {
         if (this.VelocityLocomotionDir == UE.Game.Project.Enums.E_VelocityLocomotionDirection.E_VelocityLocomotionDirection.Backward) {
             this.LeanAngle *= -1;
         }
+
+        this.Acceleration = (playerChar.GetMovementComponent() as UE.CharacterMovementComponent).Acceleration;
+        this.Acceleration2D = new UE.Vector(this.Acceleration.X, this.Acceleration.Y, 0);
+        this.Acceleration2DFloat = UE.KismetMathLibrary.VSize(this.Acceleration2D);
     }
 }
 
