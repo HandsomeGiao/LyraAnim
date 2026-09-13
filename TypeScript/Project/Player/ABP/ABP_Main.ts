@@ -14,6 +14,7 @@ Object.setPrototypeOf(TS_ABP_MainPlaceHold.prototype, ABP_Main.prototype);
 export class TS_ABP_Main extends TS_ABP_MainPlaceHold {
     declare private LastActorYaw: number;
     declare private ActorYaw: number;
+    declare private LastActorLoc: UE.Vector;
 
     override BlueprintInitializeAnimation(): void {
         console.log("TS_ABP_MainPlaceHold");
@@ -78,6 +79,18 @@ export class TS_ABP_Main extends TS_ABP_MainPlaceHold {
         this.Acceleration = (playerChar.GetMovementComponent() as UE.CharacterMovementComponent).Acceleration;
         this.Acceleration2D = new UE.Vector(this.Acceleration.X, this.Acceleration.Y, 0);
         this.Acceleration2DFloat = UE.KismetMathLibrary.VSize(this.Acceleration2D);
+
+        if (this.LastActorLoc) {
+            const ActorLoc = playerChar.K2_GetActorLocation();
+            this.DeltaLocationFloat = UE.KismetMathLibrary.VSize(
+                new UE.Vector(ActorLoc.X - this.LastActorLoc.X, ActorLoc.Y - this.LastActorLoc.Y, ActorLoc.Z - this.LastActorLoc.Z),
+            );
+            this.LastActorLoc = ActorLoc;
+        } else {
+            // 第一帧初始化为0即可.
+            this.LastActorLoc = playerChar.K2_GetActorLocation();
+            this.DeltaLocationFloat = 0;
+        }
     }
 }
 
