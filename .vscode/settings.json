@@ -1,0 +1,14 @@
+{
+    "files.exclude":  {
+                          "**/.idea":  true,
+                          "**/.vs":  true,
+                          "**/Binaries":  true,
+                          "**/Intermediate":  true,
+                          "**/Saved":  true,
+                          "**/DerivedDataCache":  true,
+                          "**/Source":  true,
+                          "**/Plugins":  true,
+                          "**/node_modules":  true,
+                          "**/Typing":  true
+                      }
+}
