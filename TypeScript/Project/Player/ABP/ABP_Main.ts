@@ -20,22 +20,25 @@ export class TS_ABP_Main extends TS_ABP_MainPlaceHold {
         console.log("TS_ABP_MainPlaceHold");
     }
 
-    CalculateVelocityLocomotionDirection(): UE.Game.Project.Enums.E_VelocityLocomotionDirection.E_VelocityLocomotionDirection {
+    CalculateLocomotionDirection(
+        vector2D: UE.Vector,
+        locomotionAngle: number,
+    ): UE.Game.Project.Enums.E_VelocityLocomotionDirection.E_VelocityLocomotionDirection {
         const locomotionDirection = UE.Game.Project.Enums.E_VelocityLocomotionDirection.E_VelocityLocomotionDirection;
 
-        if (this.Velocity2D.IsNearlyZero()) {
+        if (vector2D.IsNearlyZero()) {
             return locomotionDirection.None;
         }
 
-        if (this.VelocityLocomotionAngle >= this.ForwardMin && this.VelocityLocomotionAngle <= this.ForwardMax) {
+        if (locomotionAngle >= this.ForwardMin && locomotionAngle <= this.ForwardMax) {
             return locomotionDirection.Forward;
         }
 
-        if (this.VelocityLocomotionAngle <= this.BackwardMin || this.VelocityLocomotionAngle >= this.BackwardMax) {
+        if (locomotionAngle <= this.BackwardMin || locomotionAngle >= this.BackwardMax) {
             return locomotionDirection.Backward;
         }
 
-        return this.VelocityLocomotionAngle < this.ForwardMin ? locomotionDirection.Left : locomotionDirection.Right;
+        return locomotionAngle < this.ForwardMin ? locomotionDirection.Left : locomotionDirection.Right;
     }
 
     override BlueprintUpdateAnimation(DeltaTimeX: number): void {
@@ -49,6 +52,7 @@ export class TS_ABP_Main extends TS_ABP_MainPlaceHold {
             return;
         }
 
+        const actorRotation = playerChar.K2_GetActorRotation();
         const velocity = playerChar.GetVelocity();
 
         this.Velocity = velocity;
@@ -56,8 +60,10 @@ export class TS_ABP_Main extends TS_ABP_MainPlaceHold {
         this.Velocity2D.Y = velocity.Y;
         this.Velocity2D.Z = 0;
         this.Velocity2DFloat = velocity.Size2D();
-        this.VelocityLocomotionAngle = UE.KismetAnimationLibrary.CalculateDirection(this.Velocity2D, playerChar.K2_GetActorRotation());
-        this.VelocityLocomotionDir = this.CalculateVelocityLocomotionDirection();
+        this.VelocityLocomotionAngle = UE.KismetAnimationLibrary.CalculateDirection(this.Velocity2D, actorRotation);
+        this.LastVelocityLocomotionDir =
+            this.VelocityLocomotionDir ?? UE.Game.Project.Enums.E_VelocityLocomotionDirection.E_VelocityLocomotionDirection.None;
+        this.VelocityLocomotionDir = this.CalculateLocomotionDirection(this.Velocity2D, this.VelocityLocomotionAngle);
 
         const bAim = $ref(false);
         playerCharInterface.GetbAim(bAim);
@@ -68,7 +74,7 @@ export class TS_ABP_Main extends TS_ABP_MainPlaceHold {
         this.EquipType = $unref(equipType);
 
         this.LastActorYaw = this.ActorYaw;
-        this.ActorYaw = playerChar.K2_GetActorRotation().Yaw;
+        this.ActorYaw = actorRotation.Yaw;
 
         this.DeltaActorYaw = this.ActorYaw - this.LastActorYaw;
         this.LeanAngle = UE.KismetMathLibrary.Clamp(this.DeltaActorYaw / (DeltaTimeX == 0 ? 1 : DeltaTimeX) / 5.0, -90, 90);
@@ -77,8 +83,11 @@ export class TS_ABP_Main extends TS_ABP_MainPlaceHold {
         }
 
         this.Acceleration = (playerChar.GetMovementComponent() as UE.CharacterMovementComponent).Acceleration;
+        this.LastAcceleration2D = this.Acceleration2D ?? this.Acceleration;
         this.Acceleration2D = new UE.Vector(this.Acceleration.X, this.Acceleration.Y, 0);
         this.Acceleration2DFloat = UE.KismetMathLibrary.VSize(this.Acceleration2D);
+        const accelerationLocomotionAngle = UE.KismetAnimationLibrary.CalculateDirection(this.Acceleration2D, actorRotation);
+        this.AccelerationDir = this.CalculateLocomotionDirection(this.Acceleration2D, accelerationLocomotionAngle);
 
         if (this.LastActorLoc) {
             const ActorLoc = playerChar.K2_GetActorLocation();
@@ -98,4 +107,3 @@ const Mixin_TS_ABP_Main = blueprint.mixin(ABP_Main, TS_ABP_Main, {
     objectTakeByNative: true,
     noMixinedWarning: true,
 });
-
